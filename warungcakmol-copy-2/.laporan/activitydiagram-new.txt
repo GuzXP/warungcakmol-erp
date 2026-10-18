@@ -1,0 +1,165 @@
+Halo! Mengacu pada dokumen referensi MATERI 5 PEMROGRAMAN UML.doc dari dosen Anda, ada dua poin penting yang harus kita terapkan agar Activity Diagram ini sempurna dan mendapat nilai A:
+
+Gunakan Swimlanes (Kolom Peran): Di materi disebutkan bahwa "Peran dan area tanggung jawab didokumentasikan sebagai kolom (UML swimlanes) dalam activity diagram". Artinya, kita harus membagi diagram menjadi kolom-kolom (misal: Kolom Pelanggan dan Kolom Sistem) agar jelas siapa melakukan apa.
+
+Jangan Digabung Menjadi Satu Diagram Raksasa: Menggabungkan seluruh sistem ke dalam satu Activity Diagram adalah kesalahan fatal karena akan sangat semrawut. Praktik terbaik (best practice) adalah memecahnya berdasarkan proses bisnis utama atau modul Use Case.
+
+Oleh karena itu, saya telah merancang 3 Activity Diagram utama menggunakan format Swimlanes PlantUML terbaru. Diagram ini merangkum seluruh skenario di dokumen 2Laporan_RPL_Analisis_Perancangan_Sistem_Cak_Mol.md Anda secara rapi.
+
+Anda tinggal membuat sub-bab baru di laporan Markdown Anda (misalnya ## D. Activity Diagram) dan memasukkan kode-kode PlantUML di bawah ini.
+
+1. Activity Diagram: Alur Pemesanan Mandiri (Modul Pelanggan)
+Diagram ini mencakup Use Case Lihat Menu, Pilih Menu & Kustomisasi, hingga Kirim Pesanan.
+
+Code snippet
+@startuml Activity_Pemesanan_Pelanggan
+skinparam ActivityBackgroundColor #E3F2FD
+skinparam ActivityBorderColor #1565C0
+skinparam shadowing false
+
+|Pelanggan|
+start
+:Scan QR Code Meja / Akses Web;
+
+|Sistem (Web & Backend)|
+:Tampilkan Halaman Utama & Daftar Menu;
+
+|Pelanggan|
+:Pilih Kategori & Detail Menu;
+:Atur Kustomisasi (Level Pedas/Catatan);
+:Klik "Tambahkan ke Keranjang";
+
+|Sistem (Web & Backend)|
+:Simpan Item ke Keranjang Belanja (Client-side);
+:Update Badge Counter Keranjang;
+
+|Pelanggan|
+:Buka Keranjang Belanja;
+:Periksa Rincian & Klik "Konfirmasi Pesanan";
+
+|Sistem (Web & Backend)|
+:Kirim Data via Fetch API;
+:Memulai Transaksi Database (ACID);
+:Hitung Ulang Total Harga (Backend);
+
+if (Terjadi Error Database?) then (Ya)
+  :Rollback Database;
+  :Kirim Respons Gagal;
+  
+  |Pelanggan|
+  :Menerima Pesan Error Sistem;
+else (Tidak)
+  |Sistem (Web & Backend)|
+  :Simpan Header Pesanan & Detail Item;
+  :Commit Transaksi Database;
+  :Kirim Respons Sukses;
+  :Tampilkan Animasi Memasak (3 Detik);
+  
+  |Pelanggan|
+  :Menerima Struk Belanja Digital;
+endif
+
+stop
+@enduml
+2. Activity Diagram: Alur Monitoring & Penyelesaian (Modul Kasir)
+Diagram ini mencakup mekanisme canggih sistem Anda yaitu AJAX Polling dan tindakan penyelesaian pesanan oleh kasir. Di sini kita menggunakan simbol Fork/Join (garis tebal) sesuai materi dosen untuk menunjukkan proses yang berjalan paralel (paralel antara sistem yang melakukan polling otomatis dan kasir yang mengklik tombol).
+
+Code snippet
+@startuml Activity_Monitor_Kasir
+skinparam ActivityBackgroundColor #E8F5E9
+skinparam ActivityBorderColor #1B5E20
+skinparam shadowing false
+
+|Kasir|
+start
+:Akses Halaman Monitor Kasir;
+
+|Sistem (Web & Backend)|
+:Tampilkan Antrean Pesanan 'Pending';
+
+fork
+  |Sistem (Web & Backend)|
+  repeat :Jalankan AJAX Polling (Setiap 8 Detik);
+    if (Ada Pesanan Baru di Server?) then (Ya)
+      :Reload Halaman Otomatis;
+      :Update Daftar Antrean;
+    else (Tidak)
+      :Pertahankan Tampilan Saat Ini;
+    endif
+  repeat while (Monitor Aktif?)
+  
+fork again
+  |Kasir|
+  :Melayani Pembayaran Tunai Pelanggan;
+  :Pilih Kartu Pesanan di Layar;
+  :Klik Tombol "Tandai Selesai";
+  
+  |Sistem (Web & Backend)|
+  :Tampilkan Pop-up Konfirmasi;
+  
+  |Kasir|
+  :Klik "OK";
+  
+  |Sistem (Web & Backend)|
+  :Jalankan Query UPDATE Status Menjadi 'Selesai';
+  :Hapus Pesanan dari Layar Antrean Aktif;
+end fork
+
+|Kasir|
+:Melanjutkan Pemantauan Antrean;
+stop
+@enduml
+3. Activity Diagram: Alur Kelola Menu & Upload (Modul Admin)
+Diagram ini merangkum proses login dan tindakan CRUD yang paling kompleks, yaitu tambah menu beserta validasi unggah fotonya.
+
+Code snippet
+@startuml Activity_Kelola_Menu
+skinparam ActivityBackgroundColor #FFF9C4
+skinparam ActivityBorderColor #FBC02D
+skinparam shadowing false
+
+|Admin (Cak Mol)|
+start
+:Akses Halaman Admin & Login;
+
+|Sistem (Web & Backend)|
+:Validasi Session & Enkripsi Bcrypt;
+:Tampilkan Dashboard (Daftar Menu Aktif);
+
+|Admin (Cak Mol)|
+:Klik Tombol "+ Tambah Menu";
+
+|Sistem (Web & Backend)|
+:Tampilkan Form Tambah Menu;
+
+|Admin (Cak Mol)|
+:Isi Data (Nama, Harga, Kategori);
+:Upload File Foto Menu;
+:Klik Tombol "Simpan";
+
+|Sistem (Web & Backend)|
+:Sanitasi Input Teks;
+:Validasi File (Format JPG/PNG & Max 2MB);
+
+if (Validasi File Sukses?) then (Tidak)
+  :Tampilkan Pesan Error Validasi File;
+  |Admin (Cak Mol)|
+  :Memperbaiki File yang Diupload;
+else (Ya)
+  |Sistem (Web & Backend)|
+  :Generate Nama File Unik (uniqid);
+  :Pindahkan File ke Folder ../img/;
+  :Simpan Data Baru ke Tabel Menu;
+  :Tampilkan Notifikasi Sukses;
+endif
+
+|Admin (Cak Mol)|
+:Melihat Daftar Menu Terbaru;
+stop
+@enduml
+Penjelasan Teknis untuk Laporan Anda:
+Garis Vertikal Pembatas (|Aktor|): Sesuai instruksi modul dosen Anda, format ini akan secara otomatis di-render oleh PlantUML menjadi kolom-kolom (Swimlanes) yang memisahkan aktivitas Aktor fisik dan aktivitas System Backend.
+
+Bentuk Belah Ketupat (if/else): Mewakili Decision Node (pengambilan keputusan) ketika terjadi error database atau validasi file gagal.
+
+Tiga Diagram Ini Sudah Cukup: Jangan membuat diagram untuk Logout atau Cetak PDF karena itu aktivitas linear satu arah yang terlalu sederhana. Tiga diagram di atas adalah Core Business Process yang memiliki percabangan logika rumit yang sangat disukai oleh dosen penilai.

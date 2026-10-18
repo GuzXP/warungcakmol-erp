@@ -1,0 +1,62 @@
+Step 1 — Pasang shadcn MCP. 
+https://ui.shadcn.com/docs/mcp
+
+
+Step 2 — Buat Rules permanen.
+Di root proyek, buat AGENTS.md, lalu salin aturan berikut kurang lebih.
+# Mandatory UI Engineering Rules
+
+- Inspect package.json, components.json, and existing UI components before coding.
+- Reuse existing shadcn/ui components whenever appropriate.
+- Read actual component source and APIs before using unfamiliar components.
+- Search the shadcn registry through MCP when a suitable component is missing and MCP is available.
+- Never claim to have used MCP or read documentation without actually doing so.
+- Avoid generic AI layouts, excessive cards, unnecessary gradients, random shadows, and repetitive rounded containers.
+- Establish clear typography, spacing, visual hierarchy, and responsive behavior.
+- Use semantic HTML, accessible controls, and consistent design tokens.
+- Build one representative page first, then verify it in a browser before expanding.
+- Run available lint, typecheck, and build checks.
+- Report reused components, newly installed components, verification results, and unresolved issues.
+- Do not declare completion until the available verification steps have been performed.
+
+
+Step 3 — Buat skill yang benar
+Buat folder .agents/skills/shadcn-ui/, kemudian buat file SKILL.md di dalamnya.
+Salin instruksi ini:
+---
+name: shadcn-ui
+description: Use when building or refactoring React UI with shadcn/ui. Enforce component reuse, registry discovery, and visual verification.
+---
+
+# Workflow
+
+1. Inspect project configuration and existing components.
+2. Read the relevant Rules and component documentation.
+3. Map each required UI element to an existing component.
+4. Search the registry for missing suitable components when tools are available.
+5. Plan visual hierarchy, typography, spacing, and responsive behavior.
+6. Implement using reusable components and design tokens.
+7. Run available checks and inspect the rendered UI in a browser.
+8. Fix observed issues and report actual verification results.
+
+Do not skip inspection or verification just to finish faster.
+
+Step 4 — Berikan prompt ini kepada agent
+Before writing any code, audit this project for shadcn/ui integration.
+
+Read AGENTS.md, the shadcn-ui skill, package.json, components.json, and existing components/ui files.
+
+Verify whether shadcn MCP tools are available. Do not assume they are configured.
+
+Return:
+1. Existing reusable components.
+2. Missing components and dependencies.
+3. The component plan for the requested page.
+4. The project's current design tokens.
+5. How you will verify the rendered result.
+
+Do not edit any files yet. Do not claim to have inspected anything you have not actually accessed. Wait for my approval.
+
+Step 5 — Baru mulai coding
+Setelah audit selesai, minta agent mengerjakan satu halaman terlebih dahulu, lalu buka browser dan evaluasi hasilnya sebelum membuat seluruh halaman lainnya.
+Target kita: agent bukan hanya mengatakan menggunakan shadcn, tetapi benar-benar menggunakan komponen yang tersedia dan menghasilkan UI yang sudah diperiksa.

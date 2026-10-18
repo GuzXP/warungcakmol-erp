@@ -1,0 +1,207 @@
+Saya meminta Anda membuat **dua dokumen Laporan Analisis dan Perancangan Sistem** berdasarkan dua codebase berikut:
+
+- `warungcakmol-copy` → codebase terbaru setelah pembaruan saya.
+- `warungcakmol-copy-2` → codebase sebelum pembaruan.
+
+Saya ingin Anda benar-benar memahami keseluruhan isi kedua codebase tersebut, bukan hanya membaca beberapa file lalu langsung menyimpulkan sistemnya. Pelajari file, folder, alur sistem, fitur, hubungan antarkomponen, serta implementasi yang benar-benar ada di dalam kode. Lakukan analisis secara menyeluruh agar laporan yang dihasilkan akurat, sesuai dengan implementasi sebenarnya, dan tidak mengandung halusinasi atau fitur yang dibuat-buat.
+
+Saya juga menyediakan contoh dokumen laporan tugas yang sudah jadi, yaitu `Tugas_RPL_Nasgor.md`. Pelajari dokumen tersebut sebagai referensi format, gaya penulisan, struktur, dan tingkat kedalaman laporan. Sempurnakan pendekatan penulisannya jika diperlukan, tetapi tetap sesuaikan seluruh isi laporan dengan masing-masing codebase.
+
+## 1. Dokumen yang harus dibuat
+
+Buat dua file Markdown terpisah di root proyek:
+
+1. `Laporan_Analisis_Perancangan_Sistem_Terbaru.md` — khusus untuk `warungcakmol-copy`.
+2. `Laporan_Analisis_Perancangan_Sistem_Sebelumnya.md` — khusus untuk `warungcakmol-copy-2`.
+
+Keduanya harus berupa laporan mandiri yang lengkap dan komprehensif. Jangan mencampur isi kedua codebase dalam satu laporan.
+
+## 2. Struktur laporan wajib
+
+Susun masing-masing laporan dengan struktur berikut.
+
+### 1. Analisis Sistem Berjalan
+
+Jelaskan sistem yang benar-benar berjalan berdasarkan codebase yang dianalisis, termasuk proses bisnis, alur kerja, fitur, aktor, serta cara sistem digunakan.
+
+Jelaskan bagaimana proses berlangsung dari awal hingga akhir berdasarkan implementasi yang ditemukan. Jika ada proses manual, otomatisasi, keterbatasan, atau bagian yang belum selesai, jelaskan sesuai bukti yang tersedia.
+
+### 2. Analisis Sistem Usulan
+
+Buat analisis sistem usulan berdasarkan sistem yang sudah ada, kebutuhan yang dapat diidentifikasi, serta permasalahan atau keterbatasan yang ditemukan.
+
+Bedakan dengan jelas antara fitur yang sudah diimplementasikan, fitur yang belum tersedia, dan usulan pengembangan. Jangan menuliskan fitur usulan seolah-olah sudah tersedia di dalam codebase.
+
+### 3. Analisis Kebutuhan
+
+#### a. Aktor yang Terlibat
+Identifikasi seluruh aktor yang benar-benar berinteraksi dengan sistem berdasarkan implementasi dan alur penggunaannya. Jelaskan peran serta tanggung jawab masing-masing aktor.
+
+#### b. Kebutuhan Fungsional
+Buat daftar kebutuhan fungsional secara terstruktur, spesifik, dan cukup terperinci. Setiap kebutuhan harus dapat ditelusuri ke fitur, proses, atau implementasi yang relevan.
+
+#### c. Kebutuhan Nonfungsional
+Analisis kebutuhan nonfungsional yang relevan, seperti keamanan, performa, keandalan, kemudahan penggunaan, kompatibilitas, pemeliharaan, dan aspek lainnya yang memang relevan dengan sistem.
+
+Bedakan kebutuhan yang sudah dipenuhi oleh implementasi dengan kebutuhan yang masih berupa rekomendasi. Jangan mengklaim suatu standar keamanan, performa, atau kualitas telah terpenuhi jika tidak ada dasar yang memadai.
+
+### 4. Perancangan Sistem
+
+#### a. Use Case Diagram
+Buat use case diagram menggunakan PlantUML agar diagram dapat dirender dan diedit kembali.
+
+Pastikan diagram mengikuti kaidah UML yang baik dan benar, termasuk:
+- System boundary yang jelas.
+- Aktor di luar batas sistem.
+- Use case di dalam batas sistem.
+- Relasi aktor dengan use case yang sesuai.
+- Penggunaan relasi `<<include>>`, `<<extend>>`, generalisasi, dan relasi lainnya hanya jika memang sesuai secara semantik.
+- Penggunaan notasi dan arah relasi yang benar.
+
+Jika terdapat banyak use case, buat diagram utama yang merangkum keseluruhan sistem. Apabila diagram menjadi terlalu padat, pisahkan menjadi beberapa diagram berdasarkan modul atau kelompok proses tanpa menghilangkan use case yang penting.
+
+#### b. Deskripsi Use Case
+Buat deskripsi untuk setiap use case secara terpisah. Jangan menggabungkan beberapa use case ke dalam satu deskripsi.
+
+Gunakan identitas use case yang konsisten, misalnya UC-01, UC-02, dan seterusnya. Setiap deskripsi minimal mencakup:
+- ID dan nama use case.
+- Tujuan.
+- Aktor utama dan aktor pendukung jika ada.
+- Deskripsi singkat.
+- Pemicu.
+- Prasyarat.
+- Kondisi akhir atau postcondition.
+- Relasi dengan use case lain jika ada.
+
+Sesuaikan isi deskripsi dengan alur yang benar-benar ditemukan dalam sistem.
+
+#### c. Skenario Use Case
+Buat skenario untuk setiap use case secara terpisah, dengan tabel yang mudah dibaca.
+
+Setiap skenario wajib mencantumkan:
+- ID dan nama use case.
+- Aktor.
+- Prasyarat.
+- **Aktivitas sebelum use case.**
+- Skenario utama atau alur normal.
+- Skenario alternatif jika tersedia atau relevan.
+- Skenario kesalahan atau kondisi gagal jika tersedia atau relevan.
+- **Aktivitas sesudah use case.**
+- Kondisi akhir.
+
+Aktivitas sebelum dan aktivitas sesudah harus dicantumkan secara eksplisit pada setiap skenario use case, bukan hanya dijelaskan sekali untuk keseluruhan sistem.
+
+Pastikan urutan langkah masuk akal, aktor yang melakukan tindakan jelas, dan respons sistem sesuai dengan implementasi. Jangan membuat alur alternatif yang tidak didukung oleh sistem tanpa menandainya sebagai usulan.
+
+### 5. Activity Diagram
+
+Buat activity diagram menggunakan PlantUML untuk **setiap use case secara individual**.
+
+Jangan membuat satu activity diagram yang mencakup seluruh use case sekaligus.
+
+Setiap diagram harus menggambarkan alur aktivitas dari awal hingga akhir, termasuk:
+- Initial node dan final node.
+- Aktivitas yang jelas dan berurutan.
+- Decision dan merge node jika diperlukan.
+- Alur alternatif dan kondisi gagal yang relevan.
+- Swimlane atau partition untuk memisahkan tanggung jawab aktor dan sistem jika memang membantu memperjelas alur.
+
+Diagram harus konsisten dengan skenario use case yang bersangkutan dan tidak boleh sekadar menjadi diagram generik yang diulang untuk seluruh use case.
+
+### 6. Sequence Diagram
+
+Buat sequence diagram menggunakan PlantUML untuk **setiap use case secara individual**.
+
+Setiap sequence diagram harus menggambarkan interaksi sesuai urutan waktu, dengan peserta yang relevan, misalnya aktor, antarmuka, controller, service, database, atau komponen lain yang benar-benar ditemukan dalam codebase.
+
+Gunakan lifeline, message, activation, return message jika diperlukan, serta combined fragment seperti `alt`, `opt`, dan `loop` jika sesuai dengan alur yang dianalisis.
+
+Jangan mengasumsikan arsitektur, controller, service, API, atau komponen tertentu hanya karena lazim digunakan dalam pengembangan aplikasi. Identifikasi terlebih dahulu komponen yang benar-benar ada dalam kode.
+
+Jika implementasi tidak memungkinkan detail interaksi tertentu dipastikan, jelaskan batasan analisisnya. Apabila sequence diagram dibuat untuk menggambarkan sistem usulan, beri label yang jelas agar tidak tertukar dengan implementasi sistem berjalan.
+
+## 3. Ketentuan penting untuk seluruh diagram dan use case
+
+Ini bagian yang sangat penting dan harus dipatuhi.
+
+Misalnya, setelah analisis ditemukan 20 use case, maka seluruh kebutuhan berikut harus dibuat untuk masing-masing use case:
+
+- 20 deskripsi use case yang terpisah.
+- 20 skenario use case yang terpisah.
+- 20 activity diagram yang terpisah.
+- 20 sequence diagram yang terpisah.
+
+Jumlah tersebut hanya ilustrasi. Tentukan jumlah use case berdasarkan hasil analisis nyata, bukan memaksakan jumlah tertentu.
+
+Pastikan setiap use case mempunyai ID yang konsisten di seluruh laporan, mulai dari use case diagram, deskripsi, skenario, activity diagram, hingga sequence diagram. Nama, aktor, kondisi, dan alurnya juga harus saling cocok.
+
+Jangan hanya membuat satu diagram untuk beberapa use case, lalu mengklaim seluruh use case telah tercakup.
+
+## 4. Proses analisis yang wajib dilakukan
+
+Sebelum menulis laporan, lakukan pemeriksaan secara menyeluruh terhadap kedua codebase dan dokumen referensi.
+
+1. Identifikasi struktur folder dan seluruh file yang relevan di masing-masing codebase.
+2. Pelajari implementasi setiap modul, halaman, komponen, route, endpoint, model, skema database, konfigurasi, autentikasi, otorisasi, dan proses bisnis yang ditemukan.
+3. Telusuri hubungan antarkomponen untuk memahami alur sistem dari sisi pengguna hingga proses penyimpanan atau pemrosesan data.
+4. Identifikasi fitur yang benar-benar berfungsi, fitur yang belum selesai, bagian yang tidak digunakan, serta keterbatasan yang dapat dibuktikan.
+5. Bandingkan kedua codebase untuk memahami perubahan yang terjadi setelah pembaruan, tanpa mencampur fakta dari satu versi ke versi lainnya.
+6. Pelajari `Tugas_RPL_Nasgor.md` sebagai referensi sebelum menentukan format akhir laporan.
+7. Setelah pemahaman memadai, susun kedua laporan berdasarkan bukti dari codebase masing-masing.
+
+Jangan langsung menulis laporan hanya berdasarkan nama folder, nama file, README, atau gambaran umum proyek. Telusuri implementasi dan alur yang relevan agar analisis benar-benar mencerminkan sistem.
+
+## 5. Standar kualitas hasil
+
+Saya tidak ingin laporan yang panjang hanya karena banyak pengulangan atau penjelasan generik. Saya ingin laporan yang panjang karena analisisnya memang lengkap, mendalam, dan spesifik terhadap sistem.
+
+Ketentuannya:
+
+- Gunakan bahasa Indonesia formal yang sesuai untuk laporan akademik mata kuliah Rekayasa Perangkat Lunak.
+- Gunakan istilah yang konsisten dan mudah dipahami.
+- Hindari penjelasan berulang, paragraf pengisi, serta kebutuhan atau use case yang sebenarnya duplikat.
+- Jangan mengarang aktor, fitur, alur, struktur database, relasi, maupun implementasi.
+- Jangan menghilangkan fitur penting yang ditemukan hanya demi membuat laporan lebih singkat.
+- Gunakan tabel jika membantu keterbacaan, terutama untuk kebutuhan fungsional, kebutuhan nonfungsional, deskripsi use case, dan skenario use case.
+- Pastikan seluruh kode PlantUML lengkap, sintaksnya benar, dan dapat dirender.
+- Berikan judul atau ID yang jelas pada setiap diagram.
+- Pastikan diagram tidak terpotong, terlalu padat, atau menggunakan relasi UML yang keliru.
+- Jaga konsistensi antara analisis, kebutuhan, use case, skenario, activity diagram, dan sequence diagram.
+- Gunakan bukti implementasi sebagai dasar analisis. Jika perlu, cantumkan referensi path file yang relevan di dalam laporan agar hasil analisis mudah diverifikasi.
+- Jika suatu informasi tidak dapat dipastikan, nyatakan keterbatasannya secara eksplisit daripada mengarang jawaban.
+
+## 6. Maksimalkan proses dan output
+
+Saya menginginkan hasil yang benar-benar komprehensif, bukan laporan singkat atau sekadar kerangka.
+
+Maksimalkan kemampuan analisis dan konteks yang tersedia untuk menyelesaikan pekerjaan ini. Jangan memangkas isi penting hanya karena laporan panjang. Saya lebih mengutamakan kelengkapan, akurasi, dan konsistensi daripada kecepatan.
+
+Jika output terlalu besar untuk diselesaikan dalam satu tahap, kerjakan secara bertahap per modul atau kelompok use case. Simpan progres secara langsung ke file Markdown sehingga pekerjaan tidak hilang, lalu lanjutkan sampai seluruh bagian selesai.
+
+Jangan menganggap pekerjaan selesai hanya karena file sudah dibuat. Lakukan pemeriksaan akhir terhadap:
+- Kelengkapan setiap bagian laporan.
+- Kesesuaian isi dengan codebase yang benar.
+- Konsistensi jumlah dan ID use case.
+- Keberadaan deskripsi, skenario, activity diagram, dan sequence diagram untuk setiap use case.
+- Kelengkapan aktivitas sebelum dan sesudah setiap skenario.
+- Validitas sintaks PlantUML.
+- Konsistensi relasi dan alur UML.
+- Perbedaan antara implementasi aktual dan sistem usulan.
+- Tidak adanya bagian yang terpotong atau hanya berisi placeholder.
+
+Jika tersedia fasilitas untuk merender atau memvalidasi PlantUML, gunakan untuk memeriksa diagram. Jika tidak tersedia, periksa sintaksnya secara menyeluruh dan jangan mengklaim diagram telah berhasil dirender.
+
+## 7. Hasil akhir yang saya harapkan
+
+Simpan hasil akhir dalam dua file `.md` terpisah di root proyek, sesuai nama yang telah ditentukan.
+
+Pastikan kedua file berisi laporan lengkap, bukan sekadar outline, ringkasan, atau instruksi untuk mengisi bagian yang kosong.
+
+Setelah selesai, berikan laporan singkat kepada saya yang menjelaskan:
+1. File apa saja yang berhasil dibuat.
+2. Bagian apa saja yang telah diselesaikan untuk masing-masing codebase.
+3. Jumlah use case yang ditemukan dan jumlah diagram yang dibuat untuk masing-masing laporan.
+4. Apakah validasi sintaks PlantUML telah dilakukan dan bagaimana hasilnya.
+5. Bagian yang belum dapat dipastikan atau belum selesai, jika memang ada.
+
+**Prioritas utama: pahami kode terlebih dahulu, analisis berdasarkan fakta, tulis laporan secara lengkap, lalu validasi hasilnya. Jangan mengorbankan akurasi demi menyelesaikan pekerjaan lebih cepat.**

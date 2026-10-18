@@ -1,0 +1,61 @@
+animaster lib = 250+ animated compo, scroll effect, hero section, mouse interaction, crazy gl animation
+skiper ui.
+vengeance ui.
+uilora
+origin kit
+
+Taste Skill
+Leonx1nx/taste-skill
+Gives your Al good taste. No more boring
+UI.
+
+Agent Skills
+addyosmani/agent-skills
+Production-grade engineering skills.
+
+Caveman
+JuliusBrussee/caveman
+Why use many token when few token do
+trick.
+
+Graphify
+Turns any codebase into a knowledge
+graph.
+
+UI UX Pro Max
+nextlevelbuilder/ui-ux-pro-max-skill
+Design intelligence for pro-looking UI.
+
+Ponytail
+DietrichGebert/ponytail
+Codes like the laziest senior dev in the room.
+
+Anthropic Skills
+anthropics/skills
+The official set: docs, PDFs, decks, design.
+
+Karpathy Skills
+multica-ai/andrej-karpathy-skills
+One CLAUDE.md that fixes how Claude
+codes.
+
+Matt Pocock Skills
+mattpocock/skills
+Small, composable skills for real
+engineering.
+
+Superpowers
+obra/superpowers
+Plans, tests and debugs before it writes
+code.
+
+ajonai/anti-slop.
+
+framer-motion
+
+21st dev mcp.
+
+agent.md memecah jadi banyak tugas divisi saling sync agar ga boros token
+
+
+and many more...

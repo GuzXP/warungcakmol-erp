@@ -1,0 +1,41 @@
+@startuml
+autonumber
+skinparam style strictuml
+
+actor Pelanggan as user
+boundary "Halaman Checkout\n(checkout.php)" as view
+control "Proses Pesanan\n(process_checkout.php)" as ctrl
+database "Database\n(tabel pesanan & detail)" as db
+
+user -> view : Akses Halaman Checkout
+activate view
+view --> user : Tampilkan ringkasan keranjang & form pemesanan
+deactivate view
+
+user -> view : Input nama, nomor meja, & tipe pesanan\nKlik "Konfirmasi Pesanan"
+activate view
+view -> ctrl : POST data pesanan + payload cart (JSON)
+activate ctrl
+
+ctrl -> ctrl : Validasi ketersediaan input & sanitasi
+ctrl -> ctrl : Generate Kode Pesanan unik (contoh: CM-2026xxxx)
+
+ctrl -> db : INSERT INTO pesanan (kode, nama, no_meja, status='menunggu')
+activate db
+db --> ctrl : Return ID Pesanan
+deactivate db
+
+loop Untuk setiap item dalam cart
+    ctrl -> db : INSERT INTO detail_pesanan (id_pesanan, id_menu, qty, pedas, catatan)
+    activate db
+    db --> ctrl : Status tersimpan
+    deactivate db
+end
+
+ctrl --> view : Return status sukses & Kode Pesanan
+deactivate ctrl
+
+view -> view : Clear localStorage cart
+view --> user : Redirect ke Halaman Status Tracking
+deactivate view
+@enduml

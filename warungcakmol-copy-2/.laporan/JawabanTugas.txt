@@ -1,0 +1,895 @@
+================================================================================
+ANALISIS SISTEM BISNIS WARUNG NASI GORENG CAK MOL
+Proyek Pemrograman UML | 2491051003 - Bagus Ramadhan
+================================================================================
+
+================================================================================
+1. ANALISIS SISTEM BERJALAN (EXISTING SYSTEM)
+================================================================================
+
+1.1 OVERVIEW SISTEM
+Warung Nasi Goreng Cak Mol adalah usaha kuliner yang telah berdiri sejak 1998
+di Pulomas. Sistem saat ini mengalami proses Manual dan Semi-Digital:
+
+Proses Berjalan Saat Ini:
+- Pemilik warung mencatat menu secara manual atau spreadsheet
+- Pelanggan datang langsung ke warung dan memesan secara tatap muka
+- Kasir mencatat pesanan di kertas atau buku besar
+- Pesanan disampaikan ke dapur secara manual/lisan
+- Pembayaran dilakukan di tempat (cash)
+- Laporan penjualan dibuat manual melalui rekapitulasi kertas
+
+Kelemahan Sistem Berjalan:
+1. Tidak ada sistem inventory menu yang terstruktur
+2. Kesulitan tracking pesanan real-time
+3. Proses verifikasi pembayaran manual dan rentan error
+4. Laporan penjualan tidak akurat dan memakan waktu
+5. Tidak ada komunikasi real-time antara kasir dan dapur
+6. Data penjualan historis sulit diakses dan dianalisis
+7. Tidak ada sistem peringatan stok habis
+8. Pelanggan harus menunggu lama untuk mengetahui status pesanan
+
+1.2 STAKEHOLDER SISTEM BERJALAN
+- Pemilik (Owner): Mengelola bisnis, membuat keputusan
+- Kasir: Melayani pelanggan, mencatat pesanan
+- Koki/Dapur: Menerima pesanan lisan, memasak
+- Pelanggan: Melakukan pemesanan
+
+1.3 PROSES BISNIS UTAMA BERJALAN
+a) Manajemen Menu:
+   - Daftar menu ditulis manual di papan tulis atau menu cetak
+   - Perubahan harga membutuhkan update fisik
+   - Tidak ada verifikasi ketersediaan bahan
+
+b) Proses Pemesanan:
+   - Pelanggan menyebutkan menu yang diinginkan
+   - Kasir menuliskan di kertas pesanan
+   - Pesanan dilempar ke dapur secara lisan
+   - Tidak ada tracking status masakan
+
+c) Penyajian & Pembayaran:
+   - Kasir menyampaikan pesanan ke meja
+   - Pelanggan membayar tunai
+   - Kasir menghitung manual uang kembalian
+
+d) Laporan:
+   - Rekapitulasi pendapatan dilakukan akhir hari manual
+   - Catatan pesanan disimpan kertas (mudah hilang)
+   - Analisis penjualan tidak tersistem
+
+================================================================================
+2. ANALISIS SISTEM USULAN (PROPOSED SYSTEM)
+================================================================================
+
+2.1 VISI SISTEM USULAN
+Mengimplementasikan sistem informasi berbasis web dan mobile untuk mengelola
+manajemen menu, pemesanan, dan operasional warung secara terintegrasi, 
+real-time, dan terukur dengan peningkatan efisiensi operasional hingga 70%.
+
+2.2 TUJUAN SISTEM USULAN
+1. Digitalisasi penuh manajemen menu dengan inventory management
+2. Mengotomasi proses pemesanan dari pelanggan hingga dapur
+3. Menyediakan komunikasi real-time antara kasir dan dapur via notifikasi
+4. Menghasilkan laporan penjualan otomatis dan akurat
+5. Meningkatkan kepuasan pelanggan dengan tracking pesanan
+6. Memudahkan analisis performa penjualan dan tren menu
+7. Mengurangi human error dalam pencatatan pesanan dan pembayaran
+
+2.3 RUANG LINGKUP SISTEM USULAN
+Sistem ini akan mencakup:
+
+A. MODUL ADMIN (Dashboard & Management)
+   - Autentikasi & login admin
+   - CRUD (Create, Read, Update, Delete) menu
+   - Upload gambar & deskripsi menu otomatis
+   - Kategori menu dinamis
+   - Sistem badge (Best Seller, New Item, etc)
+   - Generate laporan PDF penjualan
+   - Monitoring pesanan real-time
+   - Manajemen kategori
+   - Validasi & sanitasi input
+
+B. MODUL USER/PELANGGAN (Frontend Web)
+   - Tampilan homepage warung dengan profil & sejarah
+   - Browsing menu dengan fitur search/filter
+   - Categorized menu display (Nasi Goreng, Mie, Capcay, Minuman)
+   - Tampilan responsif untuk desktop & mobile
+   - Navigasi floating menu untuk quick access
+
+C. MODUL PEMESANAN (Order System)
+   - Sistem keranjang belanja (shopping cart)
+   - Input nomor meja
+   - Qty selection per item
+   - Kalkulasi total otomatis
+   - Submit pesanan
+   - Tracking pesanan real-time
+
+D. MODUL KASIR (POS System)
+   - Menerima pesanan dari pelanggan
+   - Verifikasi pembayaran
+   - Generate receipt/struk digital
+   - Menampilkan pesanan pending
+   - Integrasi dengan dapur (notifications)
+
+E. MODUL NOTIFIKASI (Real-time Communication)
+   - Firebase Cloud Messaging (FCM)  
+   - Push notification ke kasir saat ada pesanan baru
+   - Alert ke dapur saat pesanan siap disajikan
+   - Status update ke pelanggan
+
+F. DATABASE & BACKEND
+   - MySQL untuk penyimpanan data terstruktur
+   - PHP sebagai server-side logic
+   - RESTful API untuk komunikasi client-server
+   - Session management & cookies untuk auth
+
+2.4 TEKNOLOGI YANG DIGUNAKAN
+- Frontend: HTML5, CSS3, JavaScript (Vanilla/Modern JS)
+- Backend: PHP 7.4+
+- Database: MySQL 5.7+
+- Libraries: 
+  * mPDF untuk generate PDF laporan
+  * Firebase Admin SDK PHP untuk FCM
+  * Kreait/Firebase-PHP untuk Firebase integration
+  * Kreait JWT untuk token management
+  * Google Cloud Storage SDK
+- Icons: Lucide Icons (SVG based)
+- Styling: Custom CSS dengan Shadcn UI inspired design
+
+2.5 ALUR PROSES BISNIS USULAN
+
+a) PROSES MANAJEMEN MENU
+   1. Admin login ke dashboard
+   2. Admin navigate ke halaman "Manajemen Menu"
+   3. Admin bisa melakukan:
+      - VIEW: Melihat daftar semua menu dengan search/filter
+      - CREATE: Tambah menu baru (nama, harga, kategori, gambar, deskripsi)
+      - UPDATE: Edit menu existing (ubah harga, kategori, gambar, dll)
+      - DELETE: Hapus menu (hapus record DB + file gambar)
+   4. System validate dan sanitasi input
+   5. System store data ke database MySQL
+   6. Admin bisa export data menu ke PDF
+
+b) PROSES PEMESANAN (CUSTOMER SIDE)
+   1. Pelanggan akses halaman utama (index.php)
+   2. Browsing menu yang digroup by kategori
+   3. Klik tombol "Dine In" untuk masuk halaman order
+   4. Masukkan nomor meja
+   5. Pilih menu & tentukan qty
+   6. Add to cart (keranjang update real-time)
+   7. Review keranjang
+   8. Submit pesanan (kirim ke backend)
+   9. System trigger Firebase notification ke kasir
+   10. Pelanggan melihat status "Pesanan diterima" atau animasi memasak
+
+c) PROSES KASIR / POS
+   1. Kasir menerima notifikasi pesanan baru via FCM
+   2. Kasir membuka aplikasi kasir (kasir.php)
+   3. Sistem menampilkan daftar pesanan pending/sedang masak
+   4. Kasir confirm pesanan = kirim to kitchen
+   5. Kitchen prepare makanan
+   6. Kasir mark pesanan ready untuk disajikan
+   7. Pelayan bawa pesanan ke meja
+   8. Kasir proses pembayaran
+   9. Generate struk digital
+   10. Mark pesanan completed
+
+d) PROSES LAPORAN
+   1. Admin akses menu "Cetak Laporan"
+   2. System generate statistik otomatis:
+      - Total pesanan
+      - Total revenue
+      - Menu paling laris
+      - Revenue per kategori
+   3. Bisa filter by date range
+   4. Export ke PDF
+   5. Admin bisa cetak atau simpan
+
+================================================================================
+3. KEBUTUHAN FUNGSIONAL (FUNCTIONAL REQUIREMENTS)
+================================================================================
+
+3.1 MODUL AUTHENTICATION & USER MANAGEMENT
+FR-1: Admin Login
+- Admin dapat login dengan username & password
+- System validate kredensial dari database
+- Support "Remember Me" feature via secure cookies
+- Display error message jika login gagal
+- Redirect ke dashboard jika sudah login
+
+FR-2: Admin Logout
+- Admin dapat logout dengan 1 klik
+- Confirmation dialog untuk prevent accidental logout
+- Destroy session & cookies
+- Redirect ke halaman login
+
+FR-3: Admin Registrasi (Untuk setup awal)
+- Support registrasi admin baru dengan form
+- Validate username uniqueness
+- Hash password dengan Argon2/Bcrypt
+- Store ke database
+
+3.2 MODUL MANAJEMEN MENU (ADMIN)
+FR-4: View Menu List
+- Display semua menu dalam format tabel
+- Feature sorting (default: newest first)
+- Show: ID, Nama, Harga, Kategori, Gambar, Button Aksi
+- Responsive design untuk desktop & mobile
+- Pagination untuk performa jika data besar
+
+FR-5: Search Menu
+- Input text untuk pencarian keyword
+- Search di field: nama_menu, kategori, harga
+- Real-time filter hasil
+- Display jumlah hasil search
+
+FR-6: Add Menu (Create)
+- Form dengan field: nama menu, harga jual, deskripsi, kategori, gambar
+- Image upload dengan validasi (jpg/png, max 2MB)
+- Auto-generate unique filename saat upload
+- Sanitasi HTML input
+- Validation: Semua field required, harga minimal 0
+- Success/error notification setelah submit
+- Navigate back ke menu list
+
+FR-7: Edit Menu (Update)
+- Display form pre-filled dengan data existing
+- Bisa update: nama, harga, kategori, deskripsi, gambar
+- Jika tidak upload gambar baru, gunakan gambar lama
+- Jika upload gambar baru, delete file lama
+- Validation & sanitasi sama seperti Add Menu
+- Success notification & redirect ke list
+
+FR-8: Delete Menu (Delete)
+- Confirmation dialog untuk prevent accidental delete
+- Delete record dari DB
+- Delete associated image file dari filesystem
+- Update affected relationships
+- Success notification
+
+FR-9: Export Menu ke PDF
+- Generate PDF berisi semua menu dengan format rapi
+- Include: nomor, nama, harga, kategori, description
+- Bisa customize: font size, colors, header/footer
+- Auto-download atau preview before print
+
+3.3 MODUL HOMEPAGE (PUBLIC)
+FR-10: Display Homepage
+- Show warung profile: nama, logo, deskripsi singkat
+- Sejarah warung (established 1998)
+- Gallery/showcase area
+- Location info & contact
+- Latest menu highlight
+- CTA (Call-to-Action) button ke order page
+
+FR-11: Browse Menu Kategori
+- Display menu grouped by kategori (tabs)
+- Kategori: Nasi Goreng, Mie & Noodle, Capcay, Minuman
+- Each item show: gambar, nama, harga, badge, deskripsi
+- Hover effect untuk UX improvement
+- Mobile-friendly card layout
+
+FR-12: Search Menu di Homepage
+- Global search feature untuk cari menu by name/kategori
+- Real-time hasil dengan debounce
+- Highlight hasil match
+
+3.4 MODUL PEMESANAN (ORDER SYSTEM)
+FR-13: Input Nomor Meja
+- Prompt/modal untuk input table number (1-20)
+- Validate input (numeric, range 1-20)
+- Save ke session untuk persistence
+
+FR-14: Select Menu & Qty
+- Click menu item untuk lihat detail & add to cart
+- Input quantity (minimum 1)
+- Update quantity bisa dari cart atau direct
+- Add to cart action
+- Visual feedback (toast/notification)
+
+FR-15: View Shopping Cart
+- Drawer/modal menampilkan items di keranjang
+- Show: menu name, qty, unit price, subtotal
+- Update qty atau remove item dari sini
+- Auto-calculate total amount
+- Clear cart option
+
+FR-16: Checkout & Submit Order
+- Review final order (meja, items, total)
+- Submit order button
+- Request ke backend (AJAX/Fetch) untuk store ke DB
+- Validation di server side (qty, items tersedia)
+- Return order ID & success response
+
+FR-17: Order Confirmation
+- Display success page dengan order ID
+- Show table number, items ordered, total price
+- Animasi memasak (loading animation) sambil tunggu
+- Auto-refresh status pesanan
+
+3.5 MODUL KASIR/POS
+FR-18: Receive Order Notification
+- FireBase FCM push notification incoming order
+- Sound/vibration alert
+- Action button: view order
+
+FR-19: View Pending Orders
+- Display list pesanan yang pending/masak
+- Columns: order ID, meja, items, total, status, waktu
+- Real-time update saat ada order baru
+- Filter by status: pending, cooking, ready
+
+FR-20: Mark Order Ready
+- Button untuk tandai pesanan siap disajikan
+- Update status di DB
+- Remove dari pending list
+
+FR-21: Process Payment
+- Manual input payment amount
+- Auto-calculate kembalian
+- Display receipt pada screen
+- Option print struk ke thermal printer
+- Save receipt to DB
+
+FR-22: Generate Receipt
+- Format struk: header (warung info), items list, total, payment, change
+- QR code (opsional) untuk order tracking
+- Receipt number & time
+- Save ke database
+
+3.6 MODUL LAPORAN (REPORTING)
+FR-23: Dashboard Analytics
+- Display key metrics: total orders hari ini, total revenue
+- Charts: sales trend per hari (7 hari terakhir)
+- Best-selling menu (top 5)
+- Revenue per kategori (pie chart)
+
+FR-24: Generate Sales Report
+- Filter by date range
+- Export ke PDF dengan format profesional
+- Include: summary, detailed transactions, graphs
+- Option email report ke owner
+
+FR-25: View Order History
+- Tampil daftar historis pesanan
+- Filter by date, status, meja
+- Show order details saat diklik
+- Search order by ID
+
+3.7 MODUL NOTIFIKASI (NOTIFICATIONS)
+FR-26: Firebase FCM Setup
+- Initialize Firebase Admin SDK dengan service account
+- Register device tokens saat kasir login
+- Store token ke database (kasir_device table)
+- Handle token expiry & refresh
+
+FR-27: Send Order Notification
+- Trigger otomatis saat new order submit
+- Send notif ke semua kasir active dengan:
+  * Title: "Pesanan Baru!"
+  * Body: "Meja X memesan Y item"
+  * Payload: order_id, meja, items, total
+  * Action: click to view detail
+
+FR-28: Handle Notification Lifecycle
+- Mark pesanan as received (delivered)
+- Trigger status update ke pelanggan
+- Log notification sent/failed untuk audit
+
+================================================================================
+4. KEBUTUHAN NON-FUNGSIONAL (NON-FUNCTIONAL REQUIREMENTS)
+================================================================================
+
+4.1 PERFORMANCE
+NFR-1: Response Time
+- Server request response time maksimal 2 detik
+- Database query max 1 detik
+- Frontend page load max 3 detik
+- AJAX request max 1.5 detik
+- Optimization: query indexing, CSS minify, JS bundling
+
+NFR-2: Scalability
+- Sistem bisa handle minimal 100 concurrent users
+- Database support 10,000+ transactions per hari
+- Image storage optimized dengan compression
+- CDN ready untuk static assets distribution
+
+NFR-3: Availability
+- System uptime minimal 99% (maintenance window 1% allowed)
+- Database backup otomatis daily
+- Disaster recovery plan
+- Graceful error handling (no crash)
+
+4.2 SECURITY
+NFR-4: Authentication & Authorization
+- Secure credential storage (hash password Argon2)
+- Session timeout 30 menit inactive
+- CSRF token untuk form submission
+- SQL injection prevention (prepared statements / parameterized query)
+- XSS prevention (htmlspecialchars, sanitize output)
+
+NFR-5: Data Privacy
+- Sensitive data encryption (passwords, Firebase keys)
+- Service account JSON file restricted access
+- HTTPS/SSL untuk secure transmission (in production)
+- No sensitive data di cookies (only session ID)
+- PII compliance untuk customer data
+
+NFR-6: Authorization & Access Control
+- Role-based access control (Admin only untuk management)
+- User firewall: pelanggan hanya akses order page
+- Admin firewall: redirect jika tidak login
+- API endpoint protection
+
+4.3 USABILITY
+NFR-7: User Interface Design
+- Clean & modern UI (Shadcn-inspired)
+- Consistent color scheme & typography
+- Intuitive navigation with clear CTAs
+- Mobile-first responsive design
+- Accessibility (WCAG 2.1 AA standard)
+- Support light mode
+- Dark mode optional
+
+NFR-8: Mobile Responsiveness
+- Breakpoints: mobile (320px), tablet (768px), desktop (1024px+)
+- Touch-friendly button size (min 44x44px)
+- Floating navigation untuk mobile order system
+- Optimized image sizes untuk mobile bandwidth
+
+4.4 COMPATIBILITY
+NFR-9: Browser Compatibility
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+- Mobile browsers: iOS Safari 14+, Chrome Android 90+
+
+NFR-10: Device Compatibility
+- PWA ready (install as app on mobile)
+- Desktop support (Windows, Mac, Linux)
+- Tablet support (iPad, Android tablets)
+- Support landscape & portrait orientation
+
+4.5 MAINTAINABILITY
+NFR-11: Code Quality
+- Clean, documented code dengan comments
+- Consistent naming convention (PHP: snake_case, JS: camelCase)
+- DRY principle (Don't Repeat Yourself)
+- Modular architecture (separate concerns)
+- Version control dengan Git
+
+NFR-12: Documentation
+- Code comments per fungsi penting
+- README untuk setup & installation
+- API documentation (endpoint, parameter, response)
+- Database schema documentation
+- User manual untuk admin
+
+4.6 RELIABILITY
+NFR-13: Error Handling
+- Try-catch untuk exception handling
+- User-friendly error messages (no technical jargon)
+- Error logging untuk debugging
+- Fallback graceful degradation jika service fail
+- Validation di client & server side
+
+NFR-14: Data Integrity
+- Database normalization (3NF)
+- Constraints: PRIMARY KEY, FOREIGN KEY, UNIQUE
+- Transaction support untuk critical operations
+- Backup & recovery procedures
+
+4.7 COMPLIANCE
+NFR-15: Regulatory Compliance
+- GDPR compliance untuk data processing
+- Indonesia PDP compliance
+- Receipt & invoice requirements sesuai regulasi
+- Tax calculation accuracy (jika applicable)
+
+================================================================================
+5. KEBUTUHAN USE CASE DIAGRAM
+================================================================================
+
+5.1 ACTORS IDENTIFICATION
+Actor 1: ADMIN
+- Tujuan: Mengelola menu, monitoring pesanan, generate laporan
+- Karakteristik: Owner/Manager warung, tech-savvy
+- Interaksi: Login, CRUD menu, export PDF
+
+Actor 2: PELANGGAN / USER
+- Tujuan: Melihat menu, melakukan pemesanan
+- Karakteristik: Pengunjung warung, casual user
+- Interaksi: Browse menu, order, tracking status
+
+Actor 3: KASIR
+- Tujuan: Terima notifikasi order, confirm pesanan, proses pembayaran
+- Karakteristik: Staff warung, operasional
+- Interaksi: Receive notifications, manage orders, generate receipt
+
+Actor 4: SISTEM EKSTERNAL (Firebase)
+- Tujuan: Mengirim push notifications
+- Interaksi: Triggered saat new order submit
+
+5.2 USE CASE LIST
+
+┌─ ADMIN USE CASES ─────────────────┐
+│ UC-01: Admin Login                 │
+│ UC-02: Admin Logout                │
+│ UC-03: View Menu List              │
+│ UC-04: Search Menu                 │
+│ UC-05: Add New Menu                │
+│ UC-06: Edit Menu                   │
+│ UC-07: Delete Menu                 │
+│ UC-08: Export Menu to PDF          │
+│ UC-09: View Dashboard              │
+│ UC-10: Generate Sales Report       │
+│ UC-11: View Order History          │
+└────────────────────────────────────┘
+
+┌─ PELANGGAN USE CASES ─────────────┐
+│ UC-12: View Homepage               │
+│ UC-13: Browse Menu by Category     │
+│ UC-14: Search Menu                 │
+│ UC-15: View Menu Detail            │
+│ UC-16: Input Table Number          │
+│ UC-17: Select Menu & Add to Cart   │
+│ UC-18: View Shopping Cart          │
+│ UC-19: Update Cart Quantity        │
+│ UC-20: Remove from Cart            │
+│ UC-21: Checkout Order              │
+│ UC-22: View Order Status           │
+│ UC-23: Receive Order Confirmation  │
+└────────────────────────────────────┘
+
+┌─ KASIR USE CASES ─────────────────┐
+│ UC-24: Receive Order Notification  │
+│ UC-25: View Pending Orders         │
+│ UC-26: Mark Order Ready            │
+│ UC-27: Process Payment             │
+│ UC-28: Generate Receipt            │
+│ UC-29: Confirm Order Completion    │
+└────────────────────────────────────┘
+
+5.3 USE CASE DIAGRAM - PLANTUML CODE
+
+📐 PlantUML Format (Rendering: render via plantuml.com atau tools lokal)
+
+```plantuml
+@startuml Cak_Mol_UseCase_Diagram
+title Warung Nasi Goreng Cak Mol - Order Management System
+left to right direction
+
+' Define Actors (Stickman Visual)
+actor "👤 Admin\n(Owner/Manager)" as Admin
+actor "👨‍💼 Pelanggan\n(Customer)" as Pelanggan
+actor "💳 Kasir\n(Staff)" as Kasir
+actor "🔥 Firebase\n(External)" as Firebase
+
+' Admin Use Cases (UC-01 to UC-11)
+(UC-01: Admin Login) as UC01
+(UC-02: Admin Logout) as UC02
+(UC-03: View Menu List) as UC03
+(UC-04: Search Menu) as UC04
+(UC-05: Add New Menu) as UC05
+(UC-06: Edit Menu) as UC06
+(UC-07: Delete Menu) as UC07
+(UC-08: Export to PDF) as UC08
+(UC-09: View Dashboard) as UC09
+(UC-10: Generate Report) as UC10
+(UC-11: Order History) as UC11
+
+' Customer/User Use Cases (UC-12 to UC-23)
+(UC-12: View Homepage) as UC12
+(UC-13: Browse by Category) as UC13
+(UC-14: Search Menu) as UC14
+(UC-15: View Menu Detail) as UC15
+(UC-16: Input Table Number) as UC16
+(UC-17: Select & Add to Cart) as UC17
+(UC-18: View Shopping Cart) as UC18
+(UC-19: Update Cart Qty) as UC19
+(UC-20: Remove from Cart) as UC20
+(UC-21: Checkout Order) as UC21
+(UC-22: View Order Status) as UC22
+(UC-23: Order Confirmation) as UC23
+
+' Kasir/POS Use Cases (UC-24 to UC-29)
+(UC-24: Receive Notification) as UC24
+(UC-25: View Pending Orders) as UC25
+(UC-26: Mark Ready) as UC26
+(UC-27: Process Payment) as UC27
+(UC-28: Generate Receipt) as UC28
+(UC-29: Confirm Completion) as UC29
+
+' Firebase Use Cases
+(Send Push Notification) as FCM
+
+' Admin Associations (No arrows - just connections)
+Admin -- UC01
+Admin -- UC02
+Admin -- UC03
+Admin -- UC04
+Admin -- UC05
+Admin -- UC06
+Admin -- UC07
+Admin -- UC08
+Admin -- UC09
+Admin -- UC10
+Admin -- UC11
+
+' Customer/User Associations
+Pelanggan -- UC12
+Pelanggan -- UC13
+Pelanggan -- UC14
+Pelanggan -- UC15
+Pelanggan -- UC16
+Pelanggan -- UC17
+Pelanggan -- UC18
+Pelanggan -- UC19
+Pelanggan -- UC20
+Pelanggan -- UC21
+Pelanggan -- UC22
+Pelanggan -- UC23
+
+' Kasir Associations
+Kasir -- UC24
+Kasir -- UC25
+Kasir -- UC26
+Kasir -- UC27
+Kasir -- UC28
+Kasir -- UC29
+
+' Firebase Associations
+Firebase -- FCM
+
+' Use Case Dependencies & Inclusions
+UC05 ..|> UC03 : <<include>>
+UC06 ..|> UC03 : <<include>>
+UC07 ..|> UC03 : <<include>>
+UC21 ..|> UC17 : <<include>>
+UC21 ..|> UC18 : <<include>>
+UC24 ..|> FCM : <<trigger>>
+
+' Cross-actor Interactions
+UC21 --> FCM : trigger notification
+FCM --> UC24 : notify kasir
+
+@enduml
+```
+
+---
+
+5.4 USE CASE DIAGRAM - MERMAID JS CODE
+
+📊 Mermaid Format (Rendering: GitHub, GitLab, atau tools online Mermaid)
+
+```mermaid
+graph LR
+    subgraph Actors["👥 ACTORS"]
+        Admin["👤 Admin<br/>(Owner/Manager)"]
+        Pelanggan["👨‍💼 Pelanggan<br/>(Customer)"]
+        Kasir["💳 Kasir<br/>(Staff)"]
+        Firebase["🔥 Firebase<br/>(External)"]
+    end
+    
+    subgraph AdminUC["🔐 ADMIN USE CASES"]
+        UC01["UC-01: Login"]
+        UC02["UC-02: Logout"]
+        UC03["UC-03: View Menu"]
+        UC04["UC-04: Search Menu"]
+        UC05["UC-05: Add Menu"]
+        UC06["UC-06: Edit Menu"]
+        UC07["UC-07: Delete Menu"]
+        UC08["UC-08: Export PDF"]
+        UC09["UC-09: Dashboard"]
+        UC10["UC-10: Report"]
+        UC11["UC-11: History"]
+    end
+    
+    subgraph CustomerUC["🛒 CUSTOMER USE CASES"]
+        UC12["UC-12: Homepage"]
+        UC13["UC-13: Browse"]
+        UC14["UC-14: Search"]
+        UC15["UC-15: Detail"]
+        UC16["UC-16: Table #"]
+        UC17["UC-17: Add Cart"]
+        UC18["UC-18: Cart"]
+        UC19["UC-19: Update Qty"]
+        UC20["UC-20: Remove"]
+        UC21["UC-21: Checkout"]
+        UC22["UC-22: Status"]
+        UC23["UC-23: Confirm"]
+    end
+    
+    subgraph KasirUC["💰 KASIR USE CASES"]
+        UC24["UC-24: Notify"]
+        UC25["UC-25: Pending"]
+        UC26["UC-26: Ready"]
+        UC27["UC-27: Payment"]
+        UC28["UC-28: Receipt"]
+        UC29["UC-29: Complete"]
+    end
+    
+    subgraph SystemUC["🔔 SYSTEM USE CASES"]
+        FCM["Send FCM Notif"]
+    end
+    
+    Admin --- UC01
+    Admin --- UC02
+    Admin --- UC03
+    Admin --- UC04
+    Admin --- UC05
+    Admin --- UC06
+    Admin --- UC07
+    Admin --- UC08
+    Admin --- UC09
+    Admin --- UC10
+    Admin --- UC11
+    
+    Pelanggan --- UC12
+    Pelanggan --- UC13
+    Pelanggan --- UC14
+    Pelanggan --- UC15
+    Pelanggan --- UC16
+    Pelanggan --- UC17
+    Pelanggan --- UC18
+    Pelanggan --- UC19
+    Pelanggan --- UC20
+    Pelanggan --- UC21
+    Pelanggan --- UC22
+    Pelanggan --- UC23
+    
+    Kasir --- UC24
+    Kasir --- UC25
+    Kasir --- UC26
+    Kasir --- UC27
+    Kasir --- UC28
+    Kasir --- UC29
+    
+    Firebase --- FCM
+    
+    UC21 -->|trigger| FCM
+    FCM -->|notify| UC24
+    
+    UC05 -.include.-> UC03
+    UC06 -.include.-> UC03
+    UC07 -.include.-> UC03
+    UC21 -.include.-> UC17
+    UC21 -.include.-> UC18
+
+    style Admin fill:#e1f5ff
+    style Pelanggan fill:#f3e5f5
+    style Kasir fill:#fff3e0
+    style Firebase fill:#fce4ec
+    
+    style AdminUC fill:#b3e5fc
+    style CustomerUC fill:#e1bee7
+    style KasirUC fill:#ffe0b2
+    style SystemUC fill:#f8bbd0
+```
+
+---
+
+5.5 QUICK REFERENCE - HOW TO RENDER
+
+| Tool | Format | Link |
+|------|--------|------|
+| **PlantUML Online** | `.plantuml` code | https://www.plantuml.com/plantuml/uml/ |
+| **Mermaid Live** | `.mermaid` code | https://mermaid.live/ |
+| **VS Code** | PlantUML Extension | ms-vscode.plantuml |
+| **GitHub** | Mermaid native | Paste code in `.md` file |
+| **GitLab** | Mermaid native | Paste code in `.md` file |
+
+📌 **Rekomendasi:** 
+- Gunakan **PlantUML** untuk dokumentasi resmi (lebih detail & customizable)
+- Gunakan **Mermaid** untuk GitHub/GitLab (native support, tidak perlu extension)
+
+---
+
+5.6 USE CASE NARRATIVES (SELECTED CRITICAL USE CASES)
+
+---
+UC-05: Add New Menu (Actor: ADMIN)
+---
+Precondition: Admin sudah login, di halaman Manajemen Menu
+
+Main Flow:
+1. Admin click button "+ Tambah Menu"
+2. System display form add menu dengan fields:
+   - Nama Menu (text input, required)
+   - Harga Jual (number input, required)
+   - Kategori (dropdown, required)
+   - Deskripsi (textarea, optional)
+   - Gambar Menu (file input, required, max 2MB)
+3. Admin fill semua field
+4. Admin upload gambar (jpg/png)
+5. Admin click "Simpan"
+6. System validate:
+   - Semua required field filled ✓
+   - File gambar format valid ✓
+   - File size < 2MB ✓
+7. System sanitasi HTML input
+8. System generate unique filename untuk gambar
+9. System move uploaded file ke folder ../img/
+10. System insert record ke tabel "menu" database
+11. System display success message
+12. System redirect ke menu list
+13. Display: "Menu berhasil ditambahkan!"
+
+Alternative Flow A (Validation Failed):
+6a. File gambar > 2MB
+7a. System display error: "File terlalu besar (max 2MB)"
+8a. Form tetap terbuka, user bisa retry
+
+Alternative Flow B (Upload Failed):
+9b. File tidak berhasil di-move ke folder
+10b. System display error: "Upload gambar gagal, coba lagi"
+11b. Form tetap terbuka
+
+Postcondition: Menu baru tersimpan di database, tampil di dashboard Admin
+
+---
+UC-21: Checkout & Process Order (Actor: PELANGGAN / USER)
+---
+Precondition: Pelanggan sudah di halaman order, ada items di cart, nomor meja sudah diinput
+
+Main Flow:
+1. Pelanggan review cart:
+   - Lihat menu items, qty, prices
+   - Total amount tertera
+2. Pelanggan klik "Checkout"
+3. System validate:
+   - Cart not empty ✓
+   - Semua items qty > 0 ✓
+   - Table number valid ✓
+4. System trigger loading animation (memasak animation)
+5. System send AJAX POST request ke backend:
+   - Endpoint: /user/process_order.php
+   - Data: {table: X, items: [...], total: Y}
+6. Backend server validate ulang (security)
+7. Backend generate order_id unik
+8. Backend insert ke tabel "orders" database
+9. Backend trigger Firebase FCM notification ke kasir
+   - Title: "Pesanan Baru!"
+   - Body: "Meja X - rp Y.000"
+   - Payload: order_id, table, items, total
+10. Backend return response:
+    {status: "success", order_id: "ORD-20250330-001"}
+11. Frontend receive response
+12. System display order confirmation page:
+    - Order ID: ORD-20250330-001
+    - Table: X
+    - Items: [list]
+    - Total: Rp Y.000
+    - Status: "Pesanan diterima!"
+13. System show animasi loading/memasak
+14. System auto-refresh order status setiap 5 detik
+
+Alternative Flow A (Invalid Cart):
+3a. Cart empty
+4a. System display: "Keranjang kosong, silakan tambah menu dulu"
+
+Alternative Flow B (Server Error):
+9b. Firebase FCM fail / network error
+10b. System log error untuk audit
+11b. But still process order & kasir bisa lihat di order list
+12b. Display warning: "Order tersimpan, tapi notifikasi mungkin tertunda"
+
+Postcondition: 
+- Order tersimpan di database
+- Kasir menerima notifikasi
+- Pelanggan melihat confirmation page dengan tracking
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+Dokumen ini berisi:
+✓ Analisis Sistem Berjalan (existing manual processes)
+✓ Analisis Sistem Usulan (proposed digital system)
+✓ 28+ Kebutuhan Fungsional terstruktur
+✓ 15+ Kebutuhan Non-Fungsional (Performance, Security, Usability, etc)
+✓ Use Case Diagram & Narratives
+
+Dibuat oleh: Bagus Ramadhan (2491051003)
+Tanggal: 30 Maret 2025
+Project: Warung Nasi Goreng Cak Mol - Order Management System

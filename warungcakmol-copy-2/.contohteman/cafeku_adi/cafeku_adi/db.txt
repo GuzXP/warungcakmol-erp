@@ -1,0 +1,134 @@
+-- phpMyAdmin SQL Dump
+-- versi 5.2.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Waktu pembuatan: 14 Mei 2026
+-- Versi server: 8.4.3
+-- Versi PHP: 8.3.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Membuat database
+--
+
+CREATE DATABASE IF NOT EXISTS `adicafedb`;
+USE `adicafedb`;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur tabel `produk`
+--
+
+CREATE TABLE `produk` (
+  `id` int NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `harga` int NOT NULL,
+  `kategori` varchar(50) NOT NULL,
+  `deskripsi` text,
+  `gambar` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Data produk cafe
+--
+
+INSERT INTO `produk`
+(`id`, `nama`, `harga`, `kategori`, `deskripsi`, `gambar`) VALUES
+(1, 'Caramel Latte', 32000, 'coffee', 'Latte creamy caramel premium.', 'poto/download (26).jpeg'),
+(2, 'Americano', 20000, 'coffee', 'Kopi hitam ringan tanpa gula.', 'poto/download (25).jpeg'),
+(3, 'Cappuccino', 28000, 'coffee', 'Espresso dengan foam creamy.', 'poto/download (24).jpeg'),
+(4, 'Hazelnut Latte', 33000, 'coffee', 'Latte dengan rasa hazelnut manis.', 'poto/download (23).jpeg'),
+(5, 'Iced Chocolate', 28000, 'noncoffee', 'Minuman cokelat dingin yang kaya rasa.', 'poto/download (22).jpeg'),
+(6, 'Matcha Latte', 30000, 'noncoffee', 'Minuman matcha Jepang + susu.', 'poto/download (21).jpeg'),
+(7, 'Strawberry Milk', 25000, 'noncoffee', 'Susu stroberi manis-asam.', 'poto/download (20).jpeg'),
+(8, 'Taro Latte', 26000, 'noncoffee', 'Rasa talas yang unik dan creamy.', 'poto/download (19).jpeg'),
+(9, 'Croissant Butter', 22000, 'pastry', 'Croissant mentega klasik renyah.', 'poto/download (18).jpeg'),
+(10, 'Choco Danish', 25000, 'pastry', 'Danish isi cokelat lumer.', 'poto/download (17).jpeg'),
+(11, 'Almond Croissant', 28000, 'pastry', 'Croissant dengan topping almond.', 'poto/download (16).jpeg'),
+(12, 'Cinnamon Roll', 24000, 'pastry', 'Roti gulung kayu manis lembut.', 'poto/download (9).jpeg'),
+(13, 'Virgin Mojito', 30000, 'nonalcohol', 'Segar nipis dan mint tanpa alkohol.', 'poto/download (8).jpeg'),
+(14, 'Blue Lagoon', 32000, 'nonalcohol', 'Minuman soda biru segar.', 'poto/download (5).jpeg'),
+(15, 'Orange Juice', 21000, 'nonalcohol', 'Jus jeruk murni.', 'poto/download (6).jpeg'),
+(16, 'Red Wine', 955000, 'alcohol', 'Red wine dari fermentasi anggur merah.', 'poto/download (1).jpeg'),
+(17, 'Beer Gold', 90000, 'alcohol', 'Bir kadar alkohol sedang.', 'poto/images.jpeg'),
+(18, 'Whiskey Premium', 1750000, 'alcohol', 'Wiski premium rasa kompleks.', 'poto/download (14).jpeg'),
+(19, 'Vodka Crystal', 200000, 'alcohol', 'Vodka crystal berkualitas.', 'poto/download (15).jpeg');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur tabel `users`
+--
+
+CREATE TABLE `users` (
+  `id` int NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Data akun login
+--
+
+INSERT INTO `users`
+(`id`, `nama`, `username`, `password`) VALUES
+(1, 'Galin Widya', 'admin', '$2a$12$Al3LGNkZf6OL1iLXFx33bue8DnU4WFwIyIYz7zl42P3fVCscAJN9a');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur tabel `keranjang`
+--
+
+CREATE TABLE `keranjang` (
+  `id` int NOT NULL,
+  `produk_id` int NOT NULL,
+  `qty` int NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Contoh item keranjang
+--
+
+INSERT INTO `keranjang`
+(`id`, `produk_id`, `qty`) VALUES
+(1, 1, 2),
+(2, 5, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Primary key
+--
+
+ALTER TABLE `produk`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `keranjang`
+  ADD PRIMARY KEY (`id`);
+
+-- --------------------------------------------------------
+
+--
+-- AUTO_INCREMENT
+--
+
+ALTER TABLE `produk`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+ALTER TABLE `users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `keranjang`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+COMMIT;

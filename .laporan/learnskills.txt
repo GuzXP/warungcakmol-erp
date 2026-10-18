@@ -1,0 +1,18 @@
+Halo saya masih kuliah saat ini beberapa semester lalu saya telah mengerjakan proyek proyek IT sistem informasi. Saya menggunakan ai untuk planning dan pengerjaan secara runtut saya instruksikan dengan informatif, tidak hanya asal one shot. Jadi sejauh ini saya menggunakan ai dengan personifikasi saya mengharapkan ai itu sendiri bisa membuatkan fitur proaktif untuk hasil yang bagus best practice, alhasil hasilnya lumayan bagus.
+
+Namun itu belum maksimal. Seperti yang saya sudah katakan saya ini masih awam mahasiswa SI belum begitu jago dalam prompting dan minim exp, ai tools stuff. Tentu beda dengan senior profesional yang memiliki pengalaman experience best practice dan kosakata istilah tingkat tinggi yang lebih matang. Sementara saya hanya mengandalkan ai one shot yang notabenenya orang lain juga bisa menulis hal yang sama. 
+
+Gini detilnya. Dulu saya menggunakan tools ai bermacam macam untuk buat enviornement proyek saya. Misal untuk planning/prd brainstorm saya pakai grok/gemini chatbot biasa. Lalu desain saya tidak mempercayakan ke ai native tsb saya coba 3rd party di website yaitu dengan 21stdev magic tools ai itu bagus referensi ai nya, lalu stitch, dll gatau sekarang mungkin ada yg baru lebih bagus saya juga kurang eksplor lagi zaman sekarang vibecoder sudah main desain web motion design beautiful component and trick keren etc for oneshot collection prompting dengan kosakata tingkat tinggi tadi misal motionsites. vizly.manus.space dan macem macem. lalu lanjut cerita dari reference 21st dev jika dapat desain reference trick yang bagus saya taruh ke eksekusi akhir di ai agent antigravity ide, disana sudah ada planning dari chatbot dan 21stdevmagictoolai reference tadi, atau bila mau cepat library siap pakai saya hanya bilang shadcn.
+
+Nah namun dalam pengerjaan/workflow proyek itu saya merasa ai tools core planning chatbot kurang begitu bagus misal claude, gemini, grok yang ternyata saya tau bahwa memang mereka dibatasi dengan token output limit per respon chat jadi meski saya sudah bacot dia tetep stuck disana itu alasan mandek nya proyek saya.
+
+Dan sekarang saya liat peluang di salah satu ai yang solusi itu saya liat chatgpt chatbot biasa sekarang outputnya banyak sekitar hampir 5rb beda dengan yg lain 1rb an. Dan mungkin claude juga bisa sebenarnya dengan dibuat .md baru terpikirkan dan mungkin hasilnya lebih better dan quant lebih banyak.
+
+Saya harap sampai sini paham dulu maksud saya, ini yang jadi bottleneck masih di bagaimana deliver pesan instruksi yang baik dan lengkap ke ai chatbot agar di eksekusi ai agent tanpa trial error lagi. Termasuk bagaimana prompting untuk prompting lagi itu sendiri, hehe agak aneh namun memang begitu yang ada di akal saya untuk orang spt saya. 
+Jadi semisal gini mau buat proyek IT erp suatu resto yang belum digital namun sistem native resto nya lengkap namun yang ada di benak awam spt saya hanya terpikir pos kasir kitchen laporan ini itu (bahkan saya type prompt ini terdengar awam kan) padahal potensial nya bisa banyak. atau ada resto yang sistem nya belum banyak namun mau digitalisasi dengan fitur melimpah erp core nya pos tapi yang lain simulasi saja misalnya.
+
+Disisi lain bahas preprompting atau intro prompting 
+Bantu juga dalam find tooling agar workflow aman karena diluar sana ada yang better saya kurang eksplor.
+
+
+
