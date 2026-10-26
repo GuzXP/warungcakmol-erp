@@ -16,3 +16,8 @@ Bantu juga dalam find tooling agar workflow aman karena diluar sana ada yang bet
 
 
 
+Ini adalah bagaimana saya menceritakan keluhan tentang batasan kapasitas experience saya terhadap banyak aspek dan hal untuk membuat proyek IT.
+tentu pada dasarnya setiap dev itu pm namun belum tentu teknis, dan bahkan saya sendiri masih mahasiswa belum jago buat workflow own proyek, dan juga experience exploration, teknis, skill dan lain lain yang biasa dimiliki PM/Senior Dev.
+
+Seorang pm itu tiap mau buat proyek pasti ada tahapan prinsip proses. ini saya belajar dimatkul saya coba ternangkan sedikit:
+PM itu
